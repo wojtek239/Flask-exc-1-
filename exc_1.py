@@ -15,9 +15,6 @@ class User(db.Model):
     date_registered = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-db.create_all()
-
-
 @app.route('/')
 def home():
     if 'user_id' in session:
@@ -67,6 +64,7 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('home'))
 
-
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
